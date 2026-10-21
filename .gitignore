@@ -1,0 +1,9 @@
+# Kept on this computer only; never published.
+# design-rules.md names what the site withholds, so it must stay private.
+.DS_Store
+design-rules.md
+samples/
+_previous/
+assets/css/oliver-chu-site-icon.svg
+*.docx
+.claude/

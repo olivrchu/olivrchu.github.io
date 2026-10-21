@@ -1,8 +1,8 @@
 /* Oliver Chu — site styles */
 
-@font-face { font-family: "Schibsted Grotesk"; font-weight: 400; font-style: normal; font-display: swap; src: url("schibsted-grotesk-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Schibsted Grotesk"; font-weight: 500; font-style: normal; font-display: swap; src: url("schibsted-grotesk-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Schibsted Grotesk"; font-weight: 600; font-style: normal; font-display: swap; src: url("schibsted-grotesk-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-weight: 400; font-style: normal; font-display: swap; src: url("../fonts/schibsted-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-weight: 500; font-style: normal; font-display: swap; src: url("../fonts/schibsted-grotesk-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-weight: 600; font-style: normal; font-display: swap; src: url("../fonts/schibsted-grotesk-latin-600-normal.woff2") format("woff2"); }
 
 :root {
   --paper: #f1ebe0;
