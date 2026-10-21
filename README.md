@@ -1,4 +1,4 @@
-# oliverchu.com
+# olivrchu.github.io
 
 A static site: `index.html` (home, with the CV further down the page) and `cv.html` (the CV on its own page). No build step, no frameworks.
 
