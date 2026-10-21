@@ -170,3 +170,19 @@ html { scroll-behavior: smooth; }
 .site-footer { margin: 0; padding: 0 var(--gutter); min-height: 64px; display: flex; align-items: center; border-top: 1px solid var(--line); }
 .footer-name { font-size: var(--step-0); text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; min-height: 64px; }
 .footer-name:hover { color: var(--accent); }
+
+/* Wide screens: a 12-column grid. Labels take columns 1–4, text 5–10 (CV entries run to 12),
+   and the type grows gently past 1440px so lines stay a comfortable length instead of leaving the right side empty. */
+@media (min-width: 1024px) {
+  .row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; row-gap: 24px; }
+  .row > .col-label { grid-column: 1 / 5; }
+  .row > .col-text { grid-column: 5 / 11; max-width: none; }
+  .row > .col-text.entries { grid-column: 5 / 13; }
+  .lead, .row > .col-text.lead { max-width: none; }
+  .row > .col-space { display: none; }
+  .entry-when { flex-basis: 11em; }
+  .entry-body { max-width: 34em; }
+}
+@media (min-width: 1440px) {
+  html { font-size: min(20px, calc(16px + (100vw - 1440px) * 0.007)); }
+}
