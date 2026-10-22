@@ -46,21 +46,21 @@
 
 <div class="posters">
 <figure class="poster">
-<img src="assets/img/poster-01.jpg" width="1680" height="2376" loading="lazy" alt="Study 1 poster: concentric coloured arcs, with the word belonging set vertically on the right.">
+<a class="poster-open" href="assets/img/poster-01.jpg" aria-haspopup="dialog"><img src="assets/img/poster-01.jpg" width="1680" height="2376" loading="lazy" alt="Study 1 poster: concentric coloured arcs, with the word belonging set vertically on the right."></a>
 <figcaption>
 <span class="meta"><span>01</span><span>Systematic review and meta-analysis · Under review</span></span>
 <span class="poster-title">A systematic review on university belonging</span>
 </figcaption>
 </figure>
 <figure class="poster">
-<img src="assets/img/poster-02.jpg" width="1680" height="2376" loading="lazy" alt="Study 2 poster: a grid of small walks on a dark ground; the word fluctuation is set vertically on the right.">
+<a class="poster-open" href="assets/img/poster-02.jpg" aria-haspopup="dialog"><img src="assets/img/poster-02.jpg" width="1680" height="2376" loading="lazy" alt="Study 2 poster: a grid of small walks on a dark ground; the word fluctuation is set vertically on the right."></a>
 <figcaption>
 <span class="meta"><span>02</span><span>Intensive longitudinal study · In preparation</span></span>
 <span class="poster-title">Fluctuations in student engagement and belonging</span>
 </figcaption>
 </figure>
 <figure class="poster">
-<img src="assets/img/poster-03.jpg" width="1680" height="2376" loading="lazy" alt="Study 3 poster: three sets of dotted concentric rings, one per trial arm; the word intervention is set vertically on the right.">
+<a class="poster-open" href="assets/img/poster-03.jpg" aria-haspopup="dialog"><img src="assets/img/poster-03.jpg" width="1680" height="2376" loading="lazy" alt="Study 3 poster: three sets of dotted concentric rings, one per trial arm; the word intervention is set vertically on the right."></a>
 <figcaption>
 <span class="meta"><span>03</span><span>Randomised trial · In preparation</span></span>
 <span class="poster-title">A student engagement intervention</span>
@@ -201,6 +201,29 @@
 <!-- Add your links when ready, e.g. <a href="https://scholar.google.com/...">Google Scholar</a> · <a href="https://orcid.org/...">ORCID</a> -->
 </footer>
 
+<dialog class="viewer" aria-label="Poster at full size">
+<button class="viewer-close" type="button">Close</button>
+<img class="viewer-img" alt="">
+</dialog>
+
+<script>
+(function () {
+  var viewer = document.querySelector(".viewer");
+  if (!viewer || !viewer.showModal) return;
+  var img = viewer.querySelector(".viewer-img");
+  document.querySelectorAll(".poster-open").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      img.src = a.href;
+      img.alt = a.querySelector("img").alt;
+      viewer.showModal();
+      viewer.scrollTo(0, 0);
+    });
+  });
+  viewer.querySelector(".viewer-close").addEventListener("click", function () { viewer.close(); });
+  img.addEventListener("click", function () { viewer.close(); });
+})();
+</script>
 <script>
 (function () {
   var items = document.querySelectorAll(".reveal");
