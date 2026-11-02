@@ -259,10 +259,10 @@ html { scroll-behavior: smooth; }
 html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='4.5' fill='%239e2f3c' stroke='%23f1ebe0' stroke-width='1.5'/%3E%3C/svg%3E") 8 8, auto; }
 a, button, .poster-open, .viewer-img, .viewer-close { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%239e2f3c' stroke='%23f1ebe0' stroke-width='1.5'/%3E%3C/svg%3E") 12 12, pointer; }
 
-/* Main cursor (assets/js/cursor.js): a hollow white ring with a maroon dot that grows inside it with mouse speed.
-   The script adds .has-cursor, which hides the system cursor. The ring's 1px line-colour outer edge keeps it visible on paper. */
+/* Main cursor (assets/js/cursor.js): a maroon dot on the pointer and a hollow ring trailing a beat behind.
+   The script adds .has-cursor, which hides the system cursor. The ring is white with a difference blend,
+   so it inverts what's under it: dark on paper, light on the dark ground and posters, in either mode. */
 .has-cursor, .has-cursor * { cursor: none !important; }
-.cursor { position: fixed; left: 0; top: 0; z-index: 2147483647; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
-.cursor-ring, .cursor-dot { position: absolute; border-radius: 50%; }
+.cursor-ring, .cursor-dot { position: fixed; left: 0; top: 0; z-index: 2147483647; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.2s; will-change: transform; }
 .cursor-ring { width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 1.5px solid #fff; mix-blend-mode: difference; }
 .cursor-dot { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; background: var(--dot); }
