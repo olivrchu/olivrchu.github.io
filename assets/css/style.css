@@ -190,10 +190,9 @@ html { scroll-behavior: smooth; }
 .site-footer { margin: 0; padding: 0 var(--gutter); min-height: 64px; display: flex; align-items: center; border-top: 1px solid var(--line); }
 .footer-name { font-size: var(--step-0); text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; min-height: 64px; }
 .footer-name:hover { color: var(--accent); }
-/* Email on the right of the footer, mirroring CV in the header; same 16px, with the envelope icon */
+/* Contact link (LinkedIn) on the right of the footer, mirroring CV in the header; same 16px */
 .footer-email { font-size: var(--step-0); text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; min-height: 64px; }
 .footer-email:hover { color: var(--accent); }
-.footer-email svg { width: 1.1em; height: 1.1em; flex: none; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 0 32px; }
 @media (max-width: 480px) { .footer-email, .footer-name { min-height: 48px; } .site-footer { padding-block: 8px; row-gap: 0; } }
 
@@ -225,15 +224,3 @@ a, button, .poster-open, .viewer-img, .viewer-close { cursor: url("data:image/sv
 .cursor-ring, .cursor-dot { position: absolute; border-radius: 50%; }
 .cursor-ring { width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 1.5px solid #fff; box-shadow: 0 0 0 1px var(--line); }
 .cursor-dot { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; background: var(--accent); will-change: transform; }
-
-/* The name on the home page: a gradient from ink to a slight maroon.
-   fit-content keeps the gradient the width of the name, not the whole row; plain ink where clipping isn't supported. */
-.home .hero .display { width: fit-content; }
-@supports ((background-clip: text) or (-webkit-background-clip: text)) {
-  .home .hero .display {
-    background: linear-gradient(100deg, var(--ink) 0%, #3d1b1f 45%, #7a2532 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-}
