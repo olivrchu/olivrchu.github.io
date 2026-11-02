@@ -212,3 +212,28 @@ html { scroll-behavior: smooth; }
 @media (min-width: 1440px) {
   html { font-size: min(20px, calc(16px + (100vw - 1440px) * 0.007)); }
 }
+
+/* Fallback cursor (no script, or touch laptops): a small maroon (accent) dot; over anything clickable a larger one.
+   A thin paper ring keeps both visible on the dark Study 2 poster. */
+html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='4.5' fill='%239e2f3c' stroke='%23f1ebe0' stroke-width='1.5'/%3E%3C/svg%3E") 8 8, auto; }
+a, button, .poster-open, .viewer-img, .viewer-close { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%239e2f3c' stroke='%23f1ebe0' stroke-width='1.5'/%3E%3C/svg%3E") 12 12, pointer; }
+
+/* Main cursor (assets/js/cursor.js): a hollow white ring with a maroon dot that grows inside it with mouse speed.
+   The script adds .has-cursor, which hides the system cursor. The ring's 1px line-colour outer edge keeps it visible on paper. */
+.has-cursor, .has-cursor * { cursor: none !important; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 2147483647; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+.cursor-ring, .cursor-dot { position: absolute; border-radius: 50%; }
+.cursor-ring { width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 1.5px solid #fff; box-shadow: 0 0 0 1px var(--line); }
+.cursor-dot { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; background: var(--accent); will-change: transform; }
+
+/* The name on the home page: a gradient from ink to a slight maroon.
+   fit-content keeps the gradient the width of the name, not the whole row; plain ink where clipping isn't supported. */
+.home .hero .display { width: fit-content; }
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .home .hero .display {
+    background: linear-gradient(100deg, var(--ink) 0%, #3d1b1f 45%, #7a2532 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
