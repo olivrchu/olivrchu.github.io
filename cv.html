@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
 <a class="site-home" href="index.html">Home</a>
 <nav class="site-nav" aria-label="Main">
 <a href="cv.html" aria-current="page">CV</a>
+<button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg></button>
 </nav>
 </header>
 
@@ -143,6 +145,7 @@
 <!-- Add your links when ready, e.g. <a href="https://scholar.google.com/...">Google Scholar</a> · <a href="https://orcid.org/...">ORCID</a> -->
 </footer>
 
+<script src="assets/js/theme.js" defer></script>
 <script src="assets/js/cursor.js" defer></script>
 </body>
 </html>
