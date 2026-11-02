@@ -213,8 +213,10 @@ html:has(.viewer[open]) { overflow: hidden; }
 }
 .entries.col-text > * + * { margin-top: 0; }
 
-.entry-notes dd.pair { display: flex; flex-wrap: nowrap; gap: 0 24px; white-space: nowrap; }
-@media (max-width: 480px) { .entry-notes dd.pair { flex-wrap: wrap; } }
+/* Supervisors side by side; when there isn't room, the second name drops to the next line.
+   A name only breaks between words if it can't fit on a line by itself (the narrow column near 1076px). */
+.entry-notes dd.pair { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.entry-notes dd.pair > span { min-width: 0; }
 
 /* One-page CV: the CV follows Now and each section fades in once as it arrives */
 html { scroll-behavior: smooth; }
