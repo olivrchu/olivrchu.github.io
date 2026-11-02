@@ -7,3 +7,6 @@ _previous/
 assets/css/oliver-chu-site-icon.svg
 *.docx
 .claude/
+
+# Conference poster: contains anonymised student-level data, keep private
+poster-ahda/
