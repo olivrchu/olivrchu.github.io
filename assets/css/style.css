@@ -26,6 +26,12 @@
   --measure: 38em;
   --measure-lead: 30em;
 
+  /* Layout: which of the 12 columns the text starts in, on screens 1024px and wider (phones stay one column).
+     --bio-start moves the bio under the name; --text-start moves the text beside Work, Now and the CV titles.
+     Both run to the right margin, so a smaller number gives a wider block. */
+  --bio-start: 6;
+  --text-start: 6;
+
   --dot: #9e2f3c; /* the cursor dot stays maroon in both modes */
   color-scheme: light;
 }
@@ -131,13 +137,18 @@ main { padding: 0 var(--gutter); }
   line-height: 0.9;
   font-weight: 500;
   letter-spacing: -0.045em;
+  /* Optical alignment: the first letter's built-in side space (about 0.042em on O and c) is pulled back,
+     so the visible edge of the letter sits on the page margin like everything below it */
+  margin-left: -0.042em;
 }
 .display--page { font-size: clamp(3.5rem, 11vw, var(--step-7)); line-height: 0.95; }
 
-/* Sections and the label / text / space row */
-.hero { padding: 64px 0 192px; display: flex; flex-direction: column; gap: 48px; }
+/* Sections and the label / text / space row.
+   Opening section: more air above the name and between the name and the bio (Draft 2, 1440px: 96 / 128 / 128) */
+.hero { padding: clamp(64px, 6.5vw, 96px) 0 clamp(96px, 9vw, 128px); display: flex; flex-direction: column; gap: clamp(48px, 9vw, 128px); }
 .section { padding: 32px 0 192px; border-top: 1px solid var(--ink); display: flex; flex-direction: column; gap: 48px; }
-.section--tight { padding-bottom: 96px; }
+/* CV subsections (Education, Awards, …): no rule above them; full-width rules are kept for major sections only */
+.section--tight { padding-bottom: 96px; border-top: 0; }
 
 .row { display: flex; flex-wrap: wrap; gap: 24px 32px; }
 .row > .col-label { flex: 1 1 180px; }
@@ -218,6 +229,23 @@ html:has(.viewer[open]) { overflow: hidden; }
 .entry-notes dd.pair { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .entry-notes dd.pair > span { min-width: 0; }
 
+/* Education timeline: a dot beside each date joined by a hairline, newest at the top.
+   Dots sit in the gutter left of the dates, so the dates still line up with the other CV sections.
+   The current entry (the PhD, in progress) is a hollow dot. On narrow screens the list is indented to make room. */
+.entries--timeline > .entry { position: relative; }
+.entries--timeline > .entry::before,
+.entries--timeline > .entry:not(:last-child)::after { content: ""; position: absolute; pointer-events: none; }
+.entries--timeline > .entry::before {
+  left: -24px; top: calc(var(--step-1) * 0.7 - 4.5px); z-index: 1;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--ink);
+}
+.entries--timeline > .entry--current::before { background: var(--paper); border: 1.5px solid var(--ink); }
+.entries--timeline > .entry:not(:last-child)::after {
+  left: -20px; width: 1px; background: var(--ink);
+  top: calc(var(--step-1) * 0.7); bottom: calc(-32px - var(--step-1) * 0.7);
+}
+@media (max-width: 1023px) { .entries--timeline { padding-left: 24px; } }
+
 /* One-page CV: the CV follows Now and each section fades in once as it arrives */
 html { scroll-behavior: smooth; }
 #cv { scroll-margin-top: 0; }
@@ -240,14 +268,17 @@ html { scroll-behavior: smooth; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 0 32px; }
 @media (max-width: 480px) { .footer-email, .footer-name { min-height: 48px; } .site-footer { padding-block: 8px; row-gap: 0; } }
 
-/* Wide screens: a 12-column grid. Labels take columns 1–4, text 5–10 (CV entries run to 12),
-   and the type grows gently past 1440px so lines stay a comfortable length instead of leaving the right side empty. */
+/* Wide screens: a 12-column grid. Labels take columns 1–5 and all text starts at column 6, running to the
+   right margin (Draft 2), capped at a readable line length on very wide screens.
+   The type grows gently past 1440px so lines stay a comfortable length instead of leaving the right side empty. */
 @media (min-width: 1024px) {
   .row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; row-gap: 24px; }
-  .row > .col-label { grid-column: 1 / 5; }
-  .row > .col-text { grid-column: 5 / 11; max-width: none; }
-  .row > .col-text.entries { grid-column: 5 / 13; }
-  .lead, .row > .col-text.lead { max-width: none; }
+  /* Start columns come from --bio-start and --text-start in :root (6 if unset). Labels fill the space before the text. */
+  .row > .col-label { grid-column: 1 / var(--text-start, 6); }
+  .row > .col-text { grid-column: var(--text-start, 6) / 13; max-width: var(--measure); }
+  .row > .col-text.entries { grid-column: var(--text-start, 6) / 13; max-width: none; }
+  .hero .row > .col-text.lead { grid-column: var(--bio-start, 6) / 13; }
+  .lead, .row > .col-text.lead { max-width: var(--measure); }
   .row > .col-space { display: none; }
   .entry-when { flex-basis: 11em; }
   .entry-body { max-width: 34em; }
