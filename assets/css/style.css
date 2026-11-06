@@ -27,7 +27,7 @@
   --measure-lead: 30em;
 
   /* Layout: which of the 12 columns the text starts in, on screens 1024px and wider (phones stay one column).
-     --bio-start moves the bio under the name; --text-start moves the text beside Work, Now and the CV titles.
+     --bio-start moves the bio under the name; --text-start moves the section labels and their text.
      Both run to the right margin, so a smaller number gives a wider block. */
   --bio-start: 6;
   --text-start: 6;
@@ -85,6 +85,13 @@ img { display: block; max-width: 100%; }
   font-weight: 500;
   letter-spacing: -0.015em;
 }
+
+/* A short dash under each section title: maroon, or rose in dark mode */
+.label::after { content: ""; display: block; width: 32px; height: 2px; margin-top: 14px; background: var(--accent); }
+/* It draws in from the left as it reaches the screen (assets/js/dash.js). Without JavaScript it's simply there. */
+.js .label::after { transform: scaleX(0); transform-origin: left; transition: transform 0.8s cubic-bezier(0.65, 0, 0.2, 1); }
+.js .label.dash-in::after { transform: scaleX(1); }
+@media print { .js .label::after { transform: none; } }
 
 .meta { font-size: var(--step--1); line-height: 1.4; color: var(--muted); }
 .entry-when, .poster .meta span:first-child { font-variant-numeric: tabular-nums; }
@@ -234,23 +241,6 @@ html:has(.viewer[open]) { overflow: hidden; }
 .entry-notes dd.pair { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .entry-notes dd.pair > span { min-width: 0; }
 
-/* Education timeline: a dot beside each entry joined by a hairline, newest at the top.
-   Dots sit in the gutter to the left of the entries, so the text still lines up with the other CV sections.
-   The current entry (the PhD, in progress) is a hollow dot. On narrow screens the list is indented to make room. */
-.entries--timeline > .entry { position: relative; }
-.entries--timeline > .entry::before,
-.entries--timeline > .entry:not(:last-child)::after { content: ""; position: absolute; pointer-events: none; }
-.entries--timeline > .entry::before {
-  left: -24px; top: calc(var(--step-1) * 0.7 - 4.5px); z-index: 1;
-  width: 9px; height: 9px; border-radius: 50%; background: var(--ink);
-}
-.entries--timeline > .entry--current::before { background: var(--paper); border: 1.5px solid var(--ink); }
-.entries--timeline > .entry:not(:last-child)::after {
-  left: -20px; width: 1px; background: var(--ink);
-  top: calc(var(--step-1) * 0.7); bottom: calc(-32px - var(--step-1) * 0.7);
-}
-@media (max-width: 1023px) { .entries--timeline { padding-left: 24px; } }
-
 /* One-page CV: the CV follows Now and each section fades in once as it arrives */
 html { scroll-behavior: smooth; }
 #cv { scroll-margin-top: 0; }
@@ -273,13 +263,15 @@ html { scroll-behavior: smooth; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 0 32px; }
 @media (max-width: 480px) { .footer-email, .footer-name { min-height: 48px; } .site-footer { padding-block: 8px; row-gap: 0; } }
 
-/* Wide screens: a 12-column grid. Labels take columns 1–5 and all text starts at column 6, running to the
-   right margin (Draft 2), capped at a readable line length on very wide screens.
+/* Wide screens: a 12-column grid. All text starts at column 6, running to the right margin (Draft 2), capped at a
+   readable line length on very wide screens. Each label sits directly above its text on that same column, so the
+   eye moves down the page and never has to jump across it.
    The type grows gently past 1440px so lines stay a comfortable length instead of leaving the right side empty. */
 @media (min-width: 1024px) {
   .row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 32px; row-gap: 24px; }
-  /* Start columns come from --bio-start and --text-start in :root (6 if unset). Labels fill the space before the text. */
-  .row > .col-label { grid-column: 1 / var(--text-start, 6); }
+  /* Start columns come from --bio-start and --text-start in :root (6 if unset) */
+  .row > .col-label { grid-column: var(--text-start, 6) / 13; }
+  .hero .row > .col-label { display: none; }
   .row > .col-text { grid-column: var(--text-start, 6) / 13; max-width: var(--measure); }
   .row > .col-text.entries { grid-column: var(--text-start, 6) / 13; max-width: none; }
   .hero .row > .col-text.lead { grid-column: var(--bio-start, 6) / 13; }
