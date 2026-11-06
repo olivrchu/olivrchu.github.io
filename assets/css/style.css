@@ -97,7 +97,6 @@ img { display: block; max-width: 100%; }
   justify-content: space-between;
   align-items: center;
   gap: 8px 32px;
-  border-bottom: 1px solid var(--line);
 }
 .site-header a {
   display: inline-flex;
@@ -121,7 +120,6 @@ img { display: block; max-width: 100%; }
 
 .site-footer {
   padding: 32px var(--gutter) 48px;
-  border-top: 1px solid var(--line);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -146,9 +144,17 @@ main { padding: 0 var(--gutter); }
 /* Sections and the label / text / space row.
    Opening section: more air above the name and between the name and the bio (Draft 2, 1440px: 96 / 128 / 128) */
 .hero { padding: clamp(64px, 6.5vw, 96px) 0 clamp(96px, 9vw, 128px); display: flex; flex-direction: column; gap: clamp(48px, 9vw, 128px); }
-.section { padding: 32px 0 192px; border-top: 1px solid var(--ink); display: flex; flex-direction: column; gap: 48px; }
-/* CV subsections (Education, Awards, …): no rule above them; full-width rules are kept for major sections only */
-.section--tight { padding-bottom: 96px; border-top: 0; }
+/* No lines across the page: spacing separates the sections, and the moving line sits above Now */
+.section { padding: 32px 0 clamp(56px, 6vw, 88px); display: flex; flex-direction: column; gap: 48px; }
+.section--tight { padding-bottom: 96px; }
+
+/* Moving line above Now (assets/js/line.js): fine enough to read as a rule, with the cursor's maroon dot on its end */
+.moving-line { display: block; width: 100%; height: 120px; overflow: visible; }
+.moving-line path { fill: none; stroke: var(--ink); stroke-width: 1.25; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s cubic-bezier(0.65, 0, 0.2, 1); }
+.moving-line circle { fill: var(--dot); opacity: 0; transition: opacity 0.4s 2.2s; }
+.moving-line.is-in path { stroke-dashoffset: 0; }
+.moving-line.is-in circle { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .moving-line path, .moving-line circle { transition: none; } }
 
 .row { display: flex; flex-wrap: wrap; gap: 24px 32px; }
 .row > .col-label { flex: 1 1 180px; }
@@ -210,7 +216,7 @@ html:has(.viewer[open]) { overflow: hidden; }
 .entry { display: flex; flex-wrap: wrap; gap: 4px 32px; }
 .entry-when { flex: 0 0 220px; font-size: var(--step-1); line-height: 1.4; color: var(--muted); }
 .entry-body { flex: 1 1 360px; max-width: 30em; font-size: var(--step-1); line-height: 1.4; display: flex; flex-direction: column; gap: 2px; }
-.entry-what { font-weight: 600; }
+.entry-what { font-weight: 500; }
 .entry-where { color: var(--muted); }
 .entry-notes { margin: 16px 0 0; font-size: var(--step-1); line-height: 1.4; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px 24px; }
 .entry-notes dt { color: var(--muted); }
@@ -218,7 +224,6 @@ html:has(.viewer[open]) { overflow: hidden; }
 
 @media (max-width: 640px) {
   .hero { padding-bottom: 96px; }
-  .section { padding-bottom: 96px; }
   .entry-notes { grid-template-columns: 1fr; gap: 0 0; }
   .entry-notes dd { margin-bottom: 8px; }
 }
@@ -229,8 +234,8 @@ html:has(.viewer[open]) { overflow: hidden; }
 .entry-notes dd.pair { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .entry-notes dd.pair > span { min-width: 0; }
 
-/* Education timeline: a dot beside each date joined by a hairline, newest at the top.
-   Dots sit in the gutter left of the dates, so the dates still line up with the other CV sections.
+/* Education timeline: a dot beside each entry joined by a hairline, newest at the top.
+   Dots sit in the gutter to the left of the entries, so the text still lines up with the other CV sections.
    The current entry (the PhD, in progress) is a hollow dot. On narrow screens the list is indented to make room. */
 .entries--timeline > .entry { position: relative; }
 .entries--timeline > .entry::before,
@@ -249,7 +254,7 @@ html:has(.viewer[open]) { overflow: hidden; }
 /* One-page CV: the CV follows Now and each section fades in once as it arrives */
 html { scroll-behavior: smooth; }
 #cv { scroll-margin-top: 0; }
-.cv-head { padding: 96px 0 64px; border-top: 1px solid var(--ink); }
+.cv-head { padding: clamp(48px, 5vw, 72px) 0 64px; }
 .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .js .reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -259,7 +264,7 @@ html { scroll-behavior: smooth; }
 @media print { .js .reveal { opacity: 1; transform: none; } }
 
 /* Footer mirrors the header: the name at the same size as Home and CV */
-.site-footer { margin: 0; padding: 0 var(--gutter); min-height: 64px; display: flex; align-items: center; border-top: 1px solid var(--line); }
+.site-footer { margin: 0; padding: 0 var(--gutter); min-height: 64px; display: flex; align-items: center; }
 .footer-name { font-size: var(--step-0); text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; min-height: 64px; }
 .footer-name:hover { color: var(--accent); }
 /* Contact link (LinkedIn) on the right of the footer, mirroring CV in the header; same 16px */
@@ -280,8 +285,10 @@ html { scroll-behavior: smooth; }
   .hero .row > .col-text.lead { grid-column: var(--bio-start, 6) / 13; }
   .lead, .row > .col-text.lead { max-width: var(--measure); }
   .row > .col-space { display: none; }
-  .entry-when { flex-basis: 11em; }
-  .entry-body { max-width: 34em; }
+  /* CV entries: titles start on the same column as the bio, and dates sit flush with the right margin */
+  .entry { flex-wrap: nowrap; justify-content: space-between; }
+  .entry-when { order: 2; flex: 0 0 auto; text-align: right; }
+  .entry-body { order: 1; flex: 0 1 var(--measure); max-width: var(--measure); }
 }
 @media (min-width: 1440px) {
   html { font-size: min(20px, calc(16px + (100vw - 1440px) * 0.007)); }
