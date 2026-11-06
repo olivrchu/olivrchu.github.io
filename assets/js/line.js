@@ -12,10 +12,17 @@
   var svg = document.createElementNS(NS, "svg");
   svg.setAttribute("class", "moving-line");
   svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("width", "100%");
+  svg.setAttribute("height", "120");
+  // The basic look is set here as well as in the CSS, so a missing or out-of-date stylesheet can't turn the line into a solid shape
   var path = document.createElementNS(NS, "path");
   path.setAttribute("pathLength", "1");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "1.25");
   var end = document.createElementNS(NS, "circle");
   end.setAttribute("r", "4.5");
+  end.setAttribute("fill", "#9e2f3c");
   svg.appendChild(path);
   svg.appendChild(end);
   hero.appendChild(svg);
