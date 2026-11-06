@@ -1,10 +1,9 @@
 /* Moving line above Now: a few slow waves added together, so it drifts without ever visibly repeating.
    It's abstract, not data. It draws itself in once on load, then keeps drifting while it's on screen.
-   With reduced motion it's a still line, drawn straight away. */
+   With reduced motion it skips the draw-in (see style.css) but still drifts: Oliver's choice, as the movement is slow and small. */
 (function () {
   var hero = document.querySelector(".hero");
   if (!hero) return;
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)");
   var NS = "http://www.w3.org/2000/svg";
   var POINTS = 160;
   var INSET = 5; // keeps the end dot inside the right margin
@@ -47,8 +46,8 @@
   var frame = 0, onScreen = true;
   function tick(ms) {
     frame = 0;
-    draw(reduce.matches ? 0 : ms / 1000);
-    if (onScreen && !reduce.matches) frame = requestAnimationFrame(tick);
+    draw(ms / 1000);
+    if (onScreen) frame = requestAnimationFrame(tick);
   }
   function wake() { if (!frame) frame = requestAnimationFrame(tick); }
 
@@ -60,7 +59,6 @@
     }).observe(svg);
   }
   addEventListener("resize", wake);
-  reduce.addEventListener("change", wake);
 
   draw(0);
   wake();
