@@ -1,6 +1,6 @@
-/* Light / Dark toggle in the header. The page starts in the theme for the visitor's time of day (sun.js:
-   light between their sunrise and sunset, dark otherwise). A click switches it for the rest of this visit;
-   the next visit follows the sun again. The button is a "Dark mode" switch: pressed means dark. */
+/* Light / Dark toggle in the header. Every visit starts in dark mode (set by a small script in each page's <head>).
+   A click switches it for the rest of this visit; the next visit starts dark again.
+   The button is a "Dark mode" switch: pressed means dark. */
 (function () {
   var root = document.documentElement;
   var btn = document.querySelector(".theme-toggle");
@@ -19,6 +19,5 @@
     try { sessionStorage.setItem("theme", next); } catch (e) {}
     label();
   });
-  root.addEventListener("themechange", label); // sun.js switched at sunrise or sunset
   system.addEventListener("change", label);
 })();
